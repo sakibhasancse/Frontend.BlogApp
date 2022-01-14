@@ -1,0 +1,11 @@
+mutation REGISTER_NEW_USER($inputData: CreateUserInputType) {
+  createUser(inputData: $inputData) {
+    token
+    user {
+      id
+      name
+      email
+      phone
+    }
+  }
+}

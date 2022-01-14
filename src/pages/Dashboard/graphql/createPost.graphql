@@ -1,0 +1,17 @@
+mutation CREATE_POST($inputData: CreatePostInputType) {
+  createPost(inputData: $inputData) {
+    id
+    title
+    description
+    slug
+    published
+    author {
+      id
+      name
+    }
+    comments {
+      id
+      text
+    }
+  }
+}
