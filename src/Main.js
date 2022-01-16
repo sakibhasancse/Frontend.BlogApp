@@ -26,7 +26,7 @@ const Main = () => (
                     return <Navbar />;
                 }}
             /> */}
-                <Privateroute path="/dashboard" component={Dashboard} />
+                <Privateroute  path="/dashboard" component={Dashboard} />
                 <Route path="/" component={Posts} />
             </Switch>
         </Router>

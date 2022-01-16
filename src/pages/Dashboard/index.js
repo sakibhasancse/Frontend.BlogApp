@@ -19,7 +19,6 @@ import DashboardCard10 from '@/components/partials/dashboard/DashboardCard10';
 import DashboardCard11 from '@/components/partials/dashboard/DashboardCard11';
 import DashboardCard12 from '@/components/partials/dashboard/DashboardCard12';
 import DashboardCard13 from '@/components/partials/dashboard/DashboardCard13';
-import Banner from '@/components/partials/Banner';
 
 const Dashboard = () => {
 
@@ -54,7 +53,7 @@ const Dashboard = () => {
                                 {/* Filter button */}
                                 <FilterButton />
                                 {/* Datepicker built with flatpickr */}
-                                <Datepicker />
+                                {/* <Datepicker /> */}
                                 {/* Add view button */}
                                 <button className="btn bg-indigo-500 hover:bg-indigo-600 text-white">
                                     <svg className="w-4 h-4 fill-current opacity-50 flex-shrink-0" viewBox="0 0 16 16">
@@ -69,7 +68,6 @@ const Dashboard = () => {
                         {/* Cards */}
                         <div className="grid grid-cols-12 gap-6">
 
-                            Line chart (Acme Plus)
                             <DashboardCard01 />
                             {/* Line chart (Acme Advanced) */}
                             <DashboardCard02 />
@@ -100,8 +98,6 @@ const Dashboard = () => {
 
                     </div>
                 </main>
-
-                <Banner />
 
             </div>
         </div>
