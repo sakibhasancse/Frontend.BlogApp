@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from 'react';
-import { focusHandling } from 'cruip-js-toolkit';
 
 import {
   Chart, DoughnutController, ArcElement, TimeScale, Tooltip,
@@ -71,7 +70,6 @@ function DoughnutChart({
             button.onclick = () => {
               c.toggleDataVisibility(item.index, !item.index);
               c.update();
-              focusHandling('outline');
             };
             // Color box
             const box = document.createElement('span');

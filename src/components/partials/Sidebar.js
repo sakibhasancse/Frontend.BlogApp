@@ -10,7 +10,7 @@ const Sidebar = ({
   const { pathname } = location;
   const page = pathname && pathname.split('/') && pathname.split('/')[2];
   // const page = '/'
-  console.log({ page })
+  console.log({ page, location })
   const trigger = useRef(null);
   const sidebar = useRef(null);
 
@@ -144,25 +144,25 @@ const Sidebar = ({
               </NavLink>
             </li>
             {/* Team */}
-            <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${page.startsWith('team-') && 'bg-gray-900'}`}>
-              <NavLink exact to="/dashboard" className={`block text-gray-200 hover:text-white transition duration-150 ${page.startsWith('team-') && 'hover:text-gray-200'}`}>
+            <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${page?.startsWith('team-') && 'bg-gray-900'}`}>
+              <NavLink exact to="/dashboard" className={`block text-gray-200 hover:text-white transition duration-150 ${page?.startsWith('team-') && 'hover:text-gray-200'}`}>
                 <div className="flex items-center justify-between">
                   <div className="flex flex-grow">
                     <svg className="flex-shrink-0 h-6 w-6 mr-3" viewBox="0 0 24 24">
-                      <path className={`fill-current text-gray-600 ${page.startsWith('team-') && 'text-indigo-500'}`} d="M18.974 8H22a2 2 0 012 2v6h-2v5a1 1 0 01-1 1h-2a1 1 0 01-1-1v-5h-2v-6a2 2 0 012-2h.974zM20 7a2 2 0 11-.001-3.999A2 2 0 0120 7zM2.974 8H6a2 2 0 012 2v6H6v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5H0v-6a2 2 0 012-2h.974zM4 7a2 2 0 11-.001-3.999A2 2 0 014 7z" />
-                      <path className={`fill-current text-gray-400 ${page.startsWith('team-') && 'text-indigo-300'}`} d="M12 6a3 3 0 110-6 3 3 0 010 6zm2 18h-4a1 1 0 01-1-1v-6H6v-6a3 3 0 013-3h6a3 3 0 013 3v6h-3v6a1 1 0 01-1 1z" />
+                      <path className={`fill-current text-gray-600 ${page?.startsWith('team-') && 'text-indigo-500'}`} d="M18.974 8H22a2 2 0 012 2v6h-2v5a1 1 0 01-1 1h-2a1 1 0 01-1-1v-5h-2v-6a2 2 0 012-2h.974zM20 7a2 2 0 11-.001-3.999A2 2 0 0120 7zM2.974 8H6a2 2 0 012 2v6H6v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5H0v-6a2 2 0 012-2h.974zM4 7a2 2 0 11-.001-3.999A2 2 0 014 7z" />
+                      <path className={`fill-current text-gray-400 ${page?.startsWith('team-') && 'text-indigo-300'}`} d="M12 6a3 3 0 110-6 3 3 0 010 6zm2 18h-4a1 1 0 01-1-1v-6H6v-6a3 3 0 013-3h6a3 3 0 013 3v6h-3v6a1 1 0 01-1 1z" />
                     </svg>
                     <span className="text-sm font-medium">Team</span>
                   </div>
                   {/* Icon */}
                   <div className="flex flex-shrink-0 ml-2">
-                    <svg className={`w-3 h-3 flex-shrink-0 ml-1 fill-current text-gray-400 ${page.startsWith('team-') && 'transform rotate-180'}`} viewBox="0 0 12 12">
+                    <svg className={`w-3 h-3 flex-shrink-0 ml-1 fill-current text-gray-400 ${page?.startsWith('team-') && 'transform rotate-180'}`} viewBox="0 0 12 12">
                       <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
                     </svg>
                   </div>
                 </div>
               </NavLink>
-              <ul className={`pl-9 mt-1 ${!page.startsWith('team-') && 'hidden'}`}>
+              <ul className={`pl-9 mt-1 ${!page?.startsWith('team-') && 'hidden'}`}>
                 <li className="mb-1 last:mb-0">
                   <NavLink exact to="/dashboard" className={`block text-gray-200 hover:text-white transition duration-150 ${page === 'team-tabs' && 'text-indigo-400 hover:text-indigo-400'}`}>
                     <span className="text-sm font-medium">Team - Tabs</span>
