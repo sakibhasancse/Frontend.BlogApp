@@ -2,7 +2,7 @@ import React from 'react';
 import { ArrowLeft, ArrowRight } from 'react-feather'
 import { Pagination } from './Pagination';
 
-export const SidNavBar = () => {
+const SidNavBar = () => {
     return (
         <>
             <aside className="w-full md:w-1/3 flex flex-col item-center px-3">
@@ -19,6 +19,7 @@ export const SidNavBar = () => {
         </>
     )
 }
+export default SidNavBar
 
 
 

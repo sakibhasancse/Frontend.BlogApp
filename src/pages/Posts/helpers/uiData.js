@@ -1,7 +1,7 @@
 
 export const blogList = [{
   _id: '1',
-  title: 'Hello title ',
+  slug: 'hello', title: 'Hello title ',
   description: 'Defaults to searching for a default babel.config.json file, but can be passed the path of any JS or JSON5 config file. NOTE: This option does not affect loading ',
   author: 'Sakib Hasan',
   category: 'Tecnical',
@@ -10,7 +10,7 @@ export const blogList = [{
   authorId: '232332'
 }, {
   _id: '13',
-  title: 'Hello title 2 ',
+  slug: 'hello', title: 'Hello title 2 ',
   description: 'Defaults to searching for a default babel.config.json file, but can be passed the path of any JS or JSON5 config file. NOTE: This option does not affect loading ',
   author: 'Sakib Hasan',
   category: ' Computer',
@@ -19,7 +19,7 @@ export const blogList = [{
   authorId: '232332'
 }, {
   _id: '31',
-  title: 'Hello title 3',
+  slug: 'hello', title: 'Hello title 3',
   category: 'Laptop',
   description: 'Defaults to searching for a default babel.config.json file, but can be passed the path of any JS or JSON5 config file. NOTE: This option does not affect loading ',
   author: 'Sakib Hasan',

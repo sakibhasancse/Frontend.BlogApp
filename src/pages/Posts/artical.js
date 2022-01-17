@@ -3,7 +3,6 @@ import { ArrowRight } from 'react-feather';
 import { Link } from 'react-router-dom';
 
 const Artical = (item) => {
-
     return (
         <artical className="flex flex-col shadow my-4" key={item.id}>
             <a href={`/${item.slug}`} className="hover:opacity-75">
