@@ -1,19 +1,19 @@
 import React from 'react';
 import { ApolloProvider } from '@apollo/client';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Posts from './pages/Posts';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
-import Privateroute from './pages/Private-route';
+import PrivateOutlet from './pages/PrivateOutlet';
 import client from "./apollo";
 
 const Main = () => (
     <ApolloProvider client={client}>
-        <Router>
-            <Switch>
-                <Route path="/login" component={Login} />
-                <Route path="/signup" component={SignUp} />
+        <BrowserRouter>
+            <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<SignUp />} />
                 {/* <Route
                 path="/*"
                 render={(props) => {
@@ -26,10 +26,13 @@ const Main = () => (
                     return <Navbar />;
                 }}
             /> */}
-                <Privateroute  path="/dashboard" component={Dashboard} />
-                <Route path="/" component={Posts} />
-            </Switch>
-        </Router>
+                <Route path="/" element={<Posts />} />
+
+                <Route path="/*" element={<PrivateOutlet />} >
+                    <Route path="dashboard" element={Dashboard} />
+                </Route>
+            </Routes>
+        </BrowserRouter>
     </ApolloProvider>
 )
 
