@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 export const setToken = (response) => {
   const { tokens = {}, error = '' } = response
   const { accessToken = {}, refreshToken = {} } = tokens

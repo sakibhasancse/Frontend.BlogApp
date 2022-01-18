@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { REGISTER_NEW_USER } from './createUser.graphql';
 import { useMutation } from '@apollo/client';
-import { Redirect } from 'react-router'
+import { Navigate, useNavigate, useLocation } from 'react-router-dom'
+import { signUpRequest } from './helpers/apiRequest';
 
 const Login = () => {
     //State
@@ -11,18 +11,6 @@ const Login = () => {
     const validEmailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const { email, password, name, phone } = values;
 
-    const [createUser, { loading, error, data }] = useMutation(REGISTER_NEW_USER)
-
-    if (error) {
-        console.log('error', error);
-    }
-    if (loading) {
-        console.log('Loading...')
-    }
-    if (data && data.createUser && data.createUser.token) {
-        //Redirect to login page
-        return <Redirect to='/login' />
-    }
 
     const HandleChange = (event) => {
         event.preventDefault();
@@ -57,11 +45,14 @@ const Login = () => {
     const HandleSubmit = async (e) => {
         e.preventDefault();
         if (email && password && name && phone) {
-            await createUser({
-                variables: {
-                    inputData: values
-                }
-            })
+            const registerValue = {
+                email, password, phone, name
+            }
+            const response = await signUpRequest(registerValue)
+            if (response) {
+                //Redirect to login page
+                return <Navigate to='/login' />
+            }
         }
 
     }
