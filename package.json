@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^12.1.10",
     "@tinymce/tinymce-react": "^3.13.0",
     "autoprefixer": "^10.4.2",
+    "axios": "^0.24.0",
     "chart.js": "^3.6.0",
     "chartjs-adapter-moment": "^1.0.0",
     "cookies": "^0.8.0",
