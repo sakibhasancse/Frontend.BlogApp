@@ -143,7 +143,7 @@ const Login = () => {
           </div>
         </form>
         <p className="text-center text-gray-500 text-xs">
-          &copy;2021 Acme Corp. All rights reserved.
+          &copy;{new Date().getFullYear()} MyBlog. All rights reserved.
         </p>
       </div>
     </div>

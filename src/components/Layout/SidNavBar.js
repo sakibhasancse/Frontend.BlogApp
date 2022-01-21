@@ -1,7 +1,7 @@
 import React from 'react';
 // import { ArrowLeft, ArrowRight } from 'react-feather';
 import { Link } from 'react-router-dom';
-import { Pagination } from './Pagination';
+import Pagination from './Pagination';
 
 const SidNavBar = () => (
   <>
