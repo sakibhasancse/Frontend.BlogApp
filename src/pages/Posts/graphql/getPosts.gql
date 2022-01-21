@@ -1,0 +1,33 @@
+query GET_POSTS($queryData: BlogQueryDataType, $optionData: OptionDataType) {
+    posts(queryData: $queryData, optionData: $optionData) {
+        data {
+            _id
+            title
+            slug
+            isActive
+            readTime
+            tags
+            views
+            reactions
+            coverImage
+            createdAt
+            followersCount
+            replyCount
+            responseCount
+            series
+            type
+            author
+            user {
+                _id
+                profile {
+                    name
+                    active
+                }
+            }
+        }
+        metadata {
+            filteredDocuments
+            totalDocuments
+        }
+    }
+}
