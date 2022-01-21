@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { Slide, toast, ToastContainer } from 'react-toastify';
 import { toastCall, validateEmail } from '@/utils';
 import { Loader } from '@/components/UI';
@@ -28,7 +28,7 @@ const Login = () => {
   } = login;
 
   // validation
-  const validate = (name, value) => {
+  const validate = useCallback((name, value) => {
     switch (name) {
       case 'user':
         if (!value) {
@@ -41,18 +41,19 @@ const Login = () => {
         }
 
         setDisableLogin(false);
-
+        break;
       case 'password':
         if (!value) {
           setDisableLogin(true);
           return 'Password is required!';
         }
         setDisableLogin(false);
+        break;
       default: {
         return '';
       }
     }
-  };
+  }, []);
 
   // change input
   const handleChange = (e) => {
@@ -181,7 +182,7 @@ const Login = () => {
                 onClick={HandleSubmit}
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="button"
-                disabled={loading || !isEnabled}
+                disabled={loading || !isEnabled || disableLogin}
               >
                 {loading ? (
                   <div className="d-flex align-items-center justify-content-center">
@@ -194,12 +195,12 @@ const Login = () => {
                   Login
                 )}
               </button>
-              <a
+              <Link
+                to="/"
                 className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-                href="#"
               >
                 Forgot Password?
-              </a>
+              </Link>
             </div>
           </form>
           <p className="text-center text-gray-500 text-xs">
