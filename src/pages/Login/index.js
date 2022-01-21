@@ -143,9 +143,9 @@ const Login = () => {
   return (
     <div>
       <div className="w-full container flex mx-auto h-screen ">
-        <div className="w-full max-w-xs m-auto">
+        <div className="w-full max-w-md m-auto">
           <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            <p className="text-xl py-8">Login with your email</p>
+            <p className="text-xl py-8">Login From</p>
             <form className="" onSubmit={HandleSubmit}>
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
