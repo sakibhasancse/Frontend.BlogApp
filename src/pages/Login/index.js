@@ -139,13 +139,14 @@ const Login = () => {
   };
 
   const isEnabled = !login.errors.user && !login.errors.password;
-
+  console.log({ loading })
   return (
     <div>
       <div className="w-full container flex mx-auto h-screen ">
         <div className="w-full max-w-xs m-auto">
-          <div>
-            <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+          <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <p className="text-xl py-8">Login with your email</p>
+            <form className="" onSubmit={HandleSubmit}>
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                   Email
@@ -180,12 +181,11 @@ const Login = () => {
               </div>
               <div className="flex items-center justify-between">
                 <button
-                  onClick={HandleSubmit}
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                  type="button"
+                  type="submit"
                   disabled={loading || !isEnabled || disableLogin}
                 >
-                  {loading ? (
+                  {loading && loading ? (
                     <div className="d-flex align-items-center justify-content-center">
                       <span className="px-1">Authenticating </span>
                       <span>
@@ -193,7 +193,7 @@ const Login = () => {
                       </span>
                     </div>
                   ) : (
-                    Login
+                    <span>Login</span>
                   )}
                 </button>
                 <Link
@@ -204,10 +204,10 @@ const Login = () => {
                 </Link>
               </div>
             </form>
-            <p className="text-center text-gray-500 text-xs">
-              &copy;{new Date().getFullYear()} MyBlog. All rights reserved.
-            </p>
           </div>
+          <p className="text-center text-gray-500 text-xs">
+            &copy;{new Date().getFullYear()} MyBlog. All rights reserved.
+          </p>
         </div>
       </div>
       {showErrorMsg && (
