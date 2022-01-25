@@ -139,7 +139,6 @@ const Login = () => {
   };
 
   const isEnabled = !login.errors.user && !login.errors.password;
-  console.log({ loading })
   return (
     <div>
       <div className="w-full container flex mx-auto h-screen ">

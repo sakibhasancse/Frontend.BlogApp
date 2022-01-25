@@ -5,12 +5,13 @@ const API_URL = getApiBaseUrl();
 
 export const signUpRequest = async (formData) => {
   try {
+
     const response = await axios({
       method: 'POST',
       url: `${API_URL}/auth/signup`,
       data: formData
     })
-
+    console.log(response)
     return response;
   } catch (error) {
     return { error: error?.message ? error.message : 'Internal Server Error' }

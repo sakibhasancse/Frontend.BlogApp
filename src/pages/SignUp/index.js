@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { signUpRequest } from './helpers/apiRequest';
 
 const Login = () => {
@@ -7,14 +7,15 @@ const Login = () => {
   const [values, setValues] = useState({
     email: 'sakibqa@gain.mail',
     password: 'aasdasdsad',
-    name: 'Sakib Hasan',
-    phone: '0176238121'
+    name: 'Sakib Hasan'
   });
-  const [errors, setErrors] = useState({ email: '', password: '', name: '', phone: '' });
+  const [errors, setErrors] = useState({ email: '', password: '', name: '' });
 
   const validEmailRegex =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  const { email, password, name, phone } = values;
+  const { email, password, name } = values;
+
+  const navigate = useNavigate()
 
   const HandleChange = (event) => {
     event.preventDefault();
@@ -32,9 +33,6 @@ const Login = () => {
           NewErrors.email = 'Email is required!';
         }
         break;
-      case 'phone':
-        NewErrors.phone = value.length < 11 ? 'Phone Number must be 11 characters long!' : '';
-        break;
       case 'password':
         NewErrors.password = value.length < 8 ? 'Password must be 8 characters long!' : '';
         break;
@@ -47,22 +45,23 @@ const Login = () => {
   };
   const disable = !!(
     errors &&
-    (errors.email || errors.password || errors.password || errors.phone)
+    (errors.email || errors.password || errors.password)
   );
 
   const HandleSubmit = async (e) => {
     e.preventDefault();
-    if (email && password && name && phone) {
+    if (email && password && name) {
       const registerValue = {
         email,
         password,
-        phone,
         name
       };
       const response = await signUpRequest(registerValue);
-      if (response) {
+
+      if (response && response.data && response.data.profile) {
         // Redirect to login page
-        return <Navigate to="/login" />;
+        navigate("/login")
+        return true
       }
     }
   };
@@ -87,21 +86,6 @@ const Login = () => {
                 placeholder="name"
               />
               <p className="text-red-500 text-xs italic">{errors && errors.name}</p>
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
-                Phone Number
-            </label>
-              <input
-                value={phone}
-                name="phone"
-                onChange={(e) => HandleChange(e)}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="phone"
-                type="text"
-                placeholder="phone"
-              />
-              <p className="text-red-500 text-xs italic">{errors && errors.phone}</p>
             </div>
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
