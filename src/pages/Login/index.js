@@ -1,36 +1,39 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { Slide, toast, ToastContainer } from 'react-toastify';
+import { connect } from 'react-redux';
 import { toastCall, validateEmail } from '@/utils';
 import { Loader } from '@/components/UI';
-import { loginRequest } from './helpers/apiRequest';
-import { setToken } from './helpers/login-helper';
+// import { loginRequest } from './helpers/login-helper';
+import { setToken } from './helpers/login-services';
+import userLogin from './helpers/login-action';
+import { apiRequest } from '@/custom-hooks';
 
-const Login = () => {
+const Login = (props) => {
   //  state
   const [login, setLogin] = useState({
     fields: {
-      user: '',
-      password: ''
+      email: 'sakib2@gain.media',
+      password: '123456'
     },
     errors: {
-      user: '',
+      email: '',
       password: ''
     }
   });
+
+  const {
+    fields: { email, password }
+  } = login;
 
   const [showErrorMsg, setShowErrorMsg] = useState(false);
   const [disableLogin, setDisableLogin] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const {
-    fields: { user, password }
-  } = login;
-
   // validation
   const validate = useCallback((name, value) => {
     switch (name) {
-      case 'user':
+      case 'email':
         if (!value) {
           setDisableLogin(true);
           return 'Email is required!';
@@ -58,13 +61,13 @@ const Login = () => {
   // change input
   const handleChange = (e) => {
     setLogin({
-      errors: {
-        ...login.errors,
-        [e.target.name]: validate(e.target.name, e.target.value)
-      },
       fields: {
         ...login.fields,
         [e.target.name]: e.target.value
+      },
+      errors: {
+        ...login.errors,
+        [e.target.name]: validate(e.target.name, e.target.value)
       }
     });
   };
@@ -120,25 +123,38 @@ const Login = () => {
           }
         });
       }
-
-      if (login.fields.user && login.fields.password) {
+      const { dispatch } = props;
+      if (login.fields.email && login.fields.password) {
         const loginValue = {
-          user: login.fields.user,
+          email: login.fields.email,
           password: login.fields.password
         };
 
-        const response = await loginRequest(loginValue);
-        if (response && response.token) {
-          const tokenInfo = await setToken(response);
-          handleTokenResult(tokenInfo);
-        }
+        dispatch(userLogin(loginValue))
+          .then(() => {
+            // history.push('/profile');
+            // window.location.reload();
+            console.log('User logged in');
+          })
+          .catch((e) => {
+            console.log(`Error: ${e?.message}`);
+            console.log('User not logged in');
+          });
+
+        // const response = await loginRequest(loginValue);
+        // if (response && response.token) {
+        //   const tokenInfo = await setToken(response);
+        //   handleTokenResult(tokenInfo);
+        // }
       }
     } catch (error) {
       toastCall('danger', error?.message || 'Internal Server error', 'top-right');
     }
   };
+  const { isLoggedIn } = props;
+  console.log({ isLoggedIn });
 
-  const isEnabled = !login.errors.user && !login.errors.password;
+  const isEnabled = !login.errors.email && !login.errors.password;
   return (
     <div>
       <div className="w-full container flex mx-auto h-screen ">
@@ -151,7 +167,7 @@ const Login = () => {
                   Email
                 </label>
                 <input
-                  value={user}
+                  value={login.fields.email}
                   name="email"
                   autoComplete="off"
                   onChange={(e) => handleChange(e)}
@@ -160,7 +176,7 @@ const Login = () => {
                   type="email"
                   placeholder="email"
                 />
-                <p className="text-red-500 text-xs italic">{login.errors.user}</p>
+                <p className="text-red-500 text-xs italic">{login.errors.email}</p>
               </div>
               <div className="mb-6">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
@@ -185,8 +201,8 @@ const Login = () => {
                   disabled={loading || !isEnabled || disableLogin}
                 >
                   {loading && loading ? (
-                    <div className="d-flex align-items-center justify-content-center">
-                      <span className="px-1">Authenticating </span>
+                    <div className="flex align-items-center justify-content-center">
+                      <span className="px-1">Login </span>
                       <span>
                         <Loader variant="#fff" width="24px" height="24px" />
                       </span>
@@ -234,4 +250,11 @@ const Login = () => {
   );
 };
 
-export default Login;
+function mapStateToProps(state) {
+  const { isLoggedIn = '' } = state.auth;
+  return {
+    isLoggedIn
+  };
+}
+
+export default connect(mapStateToProps)(Login);

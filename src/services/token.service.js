@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 class TokenService {
   getLocalRefreshToken() {
     const user = JSON.parse(localStorage.getItem('user'));

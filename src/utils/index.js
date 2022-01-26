@@ -1,4 +1,4 @@
 
 export { toastCall } from './toastConfig';
-export { validateEmail } from './validateEmail';
+export { default as validateEmail } from './validateEmail';
 export { getApiBaseUrl } from './getApiBaseUrl';

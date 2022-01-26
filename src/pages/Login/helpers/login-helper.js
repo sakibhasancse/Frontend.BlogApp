@@ -1,18 +1,22 @@
-import Cookies from 'js-cookie';
-export const setToken = (response) => {
-  const { tokens = {}, error = '' } = response
-  const { accessToken = {}, refreshToken = {} } = tokens
-  if (error) {
-    return {
-      status: false,
-      msg: error
-    };
+import axios from 'axios'
+import { getApiBaseUrl } from '@/utils'
+
+
+
+export const loginRequest = async (formData) => {
+  try {
+    const response = await axios({
+      method: 'POST',
+      url: `${API_URL}/auth`,
+      data: formData
+    })
+
+    return response;
+  } catch (error) {
+    return { error: error?.message ? error.message : 'Internal Server Error' }
   }
-  if (!accessToken) {
-    return false;
-  }
-  Cookies.set('accessToken', accessToken);
-  Cookies.set('refreshToken', refreshToken);
-  return { accessToken };
 }
 
+export const login = () => {
+  
+}
