@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { size } from 'lodash';
 
-const apiRequest = async ({ method = 'GET', API_URL, formData = {}, headers = {} }) => {
+const apiRequest = async (method = 'GET', API_URL, formData = {}, headers = {}) => {
   try {
     const requestData = {
       url: API_URL,
@@ -11,7 +11,9 @@ const apiRequest = async ({ method = 'GET', API_URL, formData = {}, headers = {}
     if (size(formData)) requestData.data = formData;
     if (size(headers)) requestData.headers = headers;
 
-    return await axios(requestData);
+    const response = await axios(requestData);
+
+    return response?.data;
   } catch (error) {
     return { error: error?.message || 'Internal service error' };
   }

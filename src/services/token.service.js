@@ -1,33 +1,35 @@
 /* eslint-disable class-methods-use-this */
-class TokenService {
-  getLocalRefreshToken() {
-    const user = JSON.parse(localStorage.getItem('user'));
-    return user?.refreshToken;
-  }
+import Cookies from 'js-cookie';
 
-  getLocalAccessToken() {
-    const user = JSON.parse(localStorage.getItem('user'));
-    return user?.accessToken;
-  }
+const TokenService = {
+  getRefreshToken() {
+    return Cookies.get('refreshToken');
+  },
 
-  updateLocalAccessToken(token) {
-    const user = JSON.parse(localStorage.getItem('user'));
-    user.accessToken = token;
-    localStorage.setItem('user', JSON.stringify(user));
-  }
+  getAccessToken() {
+    return Cookies.get('accessToken');
+  },
+
+  setAccessToken(token) {
+    Cookies.set('accessToken', JSON.stringify(token));
+  },
+
+  setRefreshToken(token) {
+    Cookies.set('refreshToken', JSON.stringify(token));
+  },
 
   getUser() {
-    return JSON.parse(localStorage.getItem('user'));
-  }
+    return JSON.parse(Cookies.get('user'));
+  },
 
   setUser(user) {
     console.log(JSON.stringify(user));
     localStorage.setItem('user', JSON.stringify(user));
-  }
+  },
 
   removeUser() {
     localStorage.removeItem('user');
   }
-}
+};
 
-export default new TokenService();
+export default TokenService;

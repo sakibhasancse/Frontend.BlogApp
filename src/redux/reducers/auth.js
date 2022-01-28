@@ -1,3 +1,4 @@
+import TokenService from '@/services/token.service';
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -6,14 +7,17 @@ import {
   LOGOUT,
   REFRESH_TOKEN
 } from '../actions/types';
+const accessToken = TokenService.getAccessToken();
+const refreshToken = TokenService.getRefreshToken();
 
-const user = JSON.parse(localStorage.getItem('user'));
-
-const initialState = user ? { isLoggedIn: true, user } : { isLoggedIn: false, user: null };
+const initialState =
+  accessToken && refreshToken
+    ? { isLoggedIn: true, refreshToken, accessToken }
+    : { isLoggedIn: false, refreshToken: null, accessToken: null };
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
-
+  console.log({ type, payload, state });
   switch (type) {
     case REGISTER_SUCCESS:
       return {
@@ -29,7 +33,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isLoggedIn: true,
-        user: payload.user
+        ...payload
       };
     case LOGIN_FAIL:
       return {
@@ -46,7 +50,7 @@ export default function (state = initialState, action) {
     case REFRESH_TOKEN:
       return {
         ...state,
-        user: { ...user, accessToken: payload }
+        ...payload
       };
     default:
       return state;

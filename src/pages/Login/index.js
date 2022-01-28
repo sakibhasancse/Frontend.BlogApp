@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useNavigate, useLocation, Link, Navigate } from 'react-router-dom';
 import { Slide, toast, ToastContainer } from 'react-toastify';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { toastCall, validateEmail } from '@/utils';
 import { Loader } from '@/components/UI';
 // import { loginRequest } from './helpers/login-helper';
@@ -9,7 +9,7 @@ import { setToken } from './helpers/login-services';
 import userLogin from './helpers/login-action';
 import { apiRequest } from '@/custom-hooks';
 
-const Login = (props) => {
+const Login = () => {
   //  state
   const [login, setLogin] = useState({
     fields: {
@@ -29,6 +29,10 @@ const Login = (props) => {
   const [showErrorMsg, setShowErrorMsg] = useState(false);
   const [disableLogin, setDisableLogin] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // Redux
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.Authontication.isLoggedIn);
 
   // validation
   const validate = useCallback((name, value) => {
@@ -93,10 +97,6 @@ const Login = (props) => {
     [from, navigate]
   );
 
-  useEffect(() => {
-    validate();
-  }, [validate]);
-
   const HandleSubmit = async (event) => {
     try {
       event.preventDefault();
@@ -123,36 +123,29 @@ const Login = (props) => {
           }
         });
       }
-      const { dispatch } = props;
+
       if (login.fields.email && login.fields.password) {
         const loginValue = {
           email: login.fields.email,
           password: login.fields.password
         };
 
-        dispatch(userLogin(loginValue))
-          .then(() => {
-            // history.push('/profile');
-            // window.location.reload();
-            console.log('User logged in');
-          })
-          .catch((e) => {
-            console.log(`Error: ${e?.message}`);
-            console.log('User not logged in');
-          });
-
-        // const response = await loginRequest(loginValue);
-        // if (response && response.token) {
-        //   const tokenInfo = await setToken(response);
-        //   handleTokenResult(tokenInfo);
-        // }
+        dispatch(userLogin(loginValue));
+        console.log({ isLoggedIn });
       }
     } catch (error) {
+      console.log({ error });
       toastCall('danger', error?.message || 'Internal Server error', 'top-right');
     }
   };
-  const { isLoggedIn } = props;
-  console.log({ isLoggedIn });
+
+  useEffect(() => {
+    validate();
+  }, [validate]);
+
+  if (isLoggedIn) {
+    return <Navigate to="/" />;
+  }
 
   const isEnabled = !login.errors.email && !login.errors.password;
   return (
@@ -250,11 +243,11 @@ const Login = (props) => {
   );
 };
 
-function mapStateToProps(state) {
-  const { isLoggedIn = '' } = state.auth;
-  return {
-    isLoggedIn
-  };
-}
+// function mapStateToProps(state) {
+//   const { isLoggedIn = '' } = state.auth;
+//   return {
+//     isLoggedIn
+//   };
+// }
 
-export default connect(mapStateToProps)(Login);
+export default Login;
