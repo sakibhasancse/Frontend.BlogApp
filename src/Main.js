@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import PrivateOutlet from './pages/PrivateOutlet';
 import client from './apollo';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Main = () => (
   <ApolloProvider client={client}>

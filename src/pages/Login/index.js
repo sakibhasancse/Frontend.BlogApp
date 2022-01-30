@@ -1,19 +1,16 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { useNavigate, useLocation, Link, Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { Slide, toast, ToastContainer } from 'react-toastify';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import userLogin from '@/pages/Login/helpers/login-services';
 import { toastCall, validateEmail } from '@/utils';
 import { Loader } from '@/components/UI';
-// import { loginRequest } from './helpers/login-helper';
-import { setToken } from './helpers/login-services';
-import userLogin from './helpers/login-action';
-import { apiRequest } from '@/custom-hooks';
 
 const Login = () => {
   //  state
   const [login, setLogin] = useState({
     fields: {
-      email: 'sakib2@gain.media',
+      email: 'sakissb2@gain.media',
       password: '123456'
     },
     errors: {
@@ -76,26 +73,15 @@ const Login = () => {
     });
   };
 
-  // location and navigate
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { from } = location.state || { from: { pathname: '/' } };
-
-  const handleTokenResult = useCallback(
-    (tokenResult) => {
-      if (tokenResult.msg === 'Invalid credentials') {
-        setShowErrorMsg(true);
-        setLoading(false);
-        setTimeout(() => {
-          setShowErrorMsg(false);
-        }, 3000);
-      } else {
-        navigate(from);
-        setLoading(false);
-      }
-    },
-    [from, navigate]
-  );
+  const handleLoginResult = (data) => {
+    if (data.error) {
+      setShowErrorMsg(true);
+      setLoading(false);
+      setTimeout(() => {
+        setShowErrorMsg(false);
+      }, 1000);
+    }
+  };
 
   const HandleSubmit = async (event) => {
     try {
@@ -130,10 +116,11 @@ const Login = () => {
           password: login.fields.password
         };
 
-        dispatch(userLogin(loginValue));
+        dispatch(userLogin(loginValue)).then((data) => {
+          handleLoginResult(data);
+        });
       }
     } catch (error) {
-      console.log({ error });
       toastCall('danger', error?.message || 'Internal Server error', 'top-right');
     }
   };
@@ -231,7 +218,7 @@ const Login = () => {
           pauseOnHover
         >
           {
-            (toast.error('Iinvalid email or password'),
+            (toast.error('Invalid email or password'),
             {
               toastId: '123'
             })
