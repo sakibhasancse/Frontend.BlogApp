@@ -1,24 +1,25 @@
-import { LOGIN_SUCCESS, LOGIN_FAIL } from '@/redux/actions';
 import { apiRequest } from '@/custom-hooks';
 import { getApiBaseUrl } from '@/utils';
 import TokenService from '@/services/token.service';
 
 const API_URL = getApiBaseUrl();
 
-const userLogin = ({ email, password }) =>
-  apiRequest('POST', `${API_URL}/auth`, { email, password }).then((data) => {
-    if (data && !data?.error) {
-      TokenService.setAccessToken(data?.accessToken);
-      TokenService.setRefreshToken(data?.refreshToken);
-      console.log('User', data);
-      return {
+const userLogin =
+  ({ email, password }) =>
+  async (dispatch) => {
+    const result = await apiRequest('POST', `${API_URL}/auth`, { email, password });
+    if (result && !result?.error) {
+      TokenService.setAccessToken(result?.accessToken);
+      TokenService.setRefreshToken(result?.refreshToken);
+      dispatch({
         type: 'LOGIN_SUCCESS',
-        payload: data
-      };
+        payload: result
+      });
+      return result;
     }
-    return {
+    dispatch({
       type: 'LOGIN_FAIL'
-    };
-  });
-
+    });
+    return result;
+  };
 export default userLogin;

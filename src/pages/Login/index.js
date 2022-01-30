@@ -131,7 +131,6 @@ const Login = () => {
         };
 
         dispatch(userLogin(loginValue));
-        console.log({ isLoggedIn });
       }
     } catch (error) {
       console.log({ error });
