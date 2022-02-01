@@ -32,6 +32,7 @@ const Login = () => {
   const isLoggedIn = useSelector((state) => state.Authontication.isLoggedIn);
 
   // validation
+  // eslint-disable-next-line consistent-return
   const validate = useCallback((name, value) => {
     switch (name) {
       case 'email':
@@ -228,12 +229,5 @@ const Login = () => {
     </div>
   );
 };
-
-// function mapStateToProps(state) {
-//   const { isLoggedIn = '' } = state.auth;
-//   return {
-//     isLoggedIn
-//   };
-// }
 
 export default Login;

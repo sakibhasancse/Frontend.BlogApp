@@ -9,7 +9,10 @@ const TokenService = {
   getAccessToken() {
     return Cookies.get('accessToken');
   },
-
+  setTokens(tokens) {
+    Cookies.set('accessToken', JSON.stringify(tokens.accessToken));
+    Cookies.set('refreshToken', JSON.stringify(tokens.refreshToken));
+  },
   setAccessToken(token) {
     Cookies.set('accessToken', JSON.stringify(token));
   },
