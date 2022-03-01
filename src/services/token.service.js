@@ -11,7 +11,7 @@ const TokenService = {
   },
   setTokens(tokens) {
     Cookies.set('accessToken', JSON.stringify(tokens.accessToken));
-    Cookies.set('refreshToken', JSON.stringify(tokens.refreshToken));
+    Cookies.set('refreshToken', JSON.stringify(token.refreshToken));
   },
   setAccessToken(token) {
     Cookies.set('accessToken', JSON.stringify(token));

@@ -23,7 +23,7 @@ const userLogin =
     return result;
   };
 
-export const handleUnauthorizedUser = async () => {
+const handleUnauthorizedUser = async () => {
   try {
     let isTokenRefreshed = false;
     const existingTokens = {
